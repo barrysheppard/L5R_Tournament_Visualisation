@@ -55,7 +55,6 @@ for (i in 1:count){
   cat('\n', "**Card: ", cards[cards$id == rulings$card[i,],]$name, "**\n\n", rulings$text[i],"\n","*Source:",rulings$source[i],"*\n","\n","\n") 
 }
 
-
 ```
 
 
