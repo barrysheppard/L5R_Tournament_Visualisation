@@ -1,6 +1,6 @@
 ---
 title: "L5R Rulings"
-date: "21/11/2017"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   pdf_document: default
   html_document:
