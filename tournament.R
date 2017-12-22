@@ -1,4 +1,4 @@
-# Org Chart for Single Elims
+# This code produces a chart of the Single Elims in a tournament
 
 require("DiagrammeR")
 
@@ -12,13 +12,14 @@ require("DiagrammeR")
 tournament <- "Pax Unplugged - Grand Kotei"
 
 # Clan Colors
-# Crab:     4C5660
-# Crane:    98AEAB
-# Dragon:   567C63
-# Lion:     AF9445
-# Phoenix:  B47741
-# Scorpion: 8C3D2E
-# Unicorn:  6D5472
+crab <- '#4C5660'
+crane <- '#98AEAB'
+dragon <- '#567C63'
+lion <- '#AF9445'
+phoenix <- '#B47741'
+scorpion <- '#8C3D2E'
+unicorn <- '#6D5472'
+neutral <- '#888888'
 
 # Enter names and color codes for top 16
 name16a <-"Stephen Didion"; clan16a <-"4C5660"
