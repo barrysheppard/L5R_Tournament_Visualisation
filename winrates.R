@@ -15,12 +15,10 @@ startdate <- as.Date('2017-12-14')
 enddate <- Sys.Date()
 
 
+# This contacts the Lotus Pavilion website and downloads every game after the start date through the API
 options(stringsAsFactors = FALSE)
-
-## This gets the games
-
 url  <- "http://thelotuspavilion.com"
-path <- "/api/v2/json/games"
+path <- paste0("/api/v2/json/games?after=",startdate)
 raw.result <- GET(url = url, path = path)
 this.raw.content <- rawToChar(raw.result$content)
 all_games <- fromJSON(this.raw.content)
