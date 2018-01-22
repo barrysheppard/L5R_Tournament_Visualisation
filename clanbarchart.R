@@ -1,28 +1,29 @@
 
 # This Code is for preparing bar charts for L5R tournaments.
 
+# Commented out for fear of another user murdering us
 # Clear the data at the start for a tidy environment
-rm(list=ls())
+# rm(list=ls())
 # As we want to save files we're setting the directory to the same as the plot.R file
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 # Barchart for breakdown of clans in a tournament etc.
 # In order of Crab, Crane, Dragon, Lion, Phoenix, Scorpion, Unicorn
-tournament <- "PAX"
-attendance <- c(27,35,32,31,27,44,15) 
-qualifiers <- c(1,1,3,2,0,5,0) 
+tournament <- "Cork Kotei"
+attendance <- c(30,50,30,30,30,30,10) 
+qualifiers <- c(4,0,10,0,5,2,0) 
 rate <- round(100*qualifiers/attendance)
 
+# Saving to dataframe
+clan <- c("Crab","Crane", "Dragon", "Lion", "Phoenix", "Scorpion", "Unicorn") 
+clan_data = data.frame(clan, attendance, qualifiers, rate) 
 
 # Setup loading packages and images
 
-clan_data = data.frame(clan, attendance, qualifiers, rate) 
-
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(jpeg, png, ggplot2, grid, neuropsychology)
-clan <- c("Crab","Crane", "Dragon", "Lion", "Phoenix", "Scorpion", "Unicorn") 
 clan_palette <- c("#4C5660","#98AEAB", "#567C63", "#AF9445", "#B47741", "#8C3D2E", "#6D5472")
-image <- jpeg::readJPEG("background.jpg")
+image <- jpeg::readJPEG("warpconbackground.jpg")
 crab <- png::readPNG("mon_crab.png")
 crabmon <- grid::rasterGrob(crab, interpolate = T)
 crane <- png::readPNG("mon_crane.png")
@@ -43,13 +44,13 @@ unicornmon <- grid::rasterGrob(unicorn, interpolate = T)
 
 
 ## Attendance
-clantitle <- paste("Imperial Advisor\n",tournament,"attendance")
-titlevjust <- -max(attendance)*6
+clantitle <- paste(tournament,"\nAttendance")
+titlevjust <- -max(attendance)*5
 monymax <- max(attendance)/5
 
 ggplot(clan_data, aes(clan, attendance, fill = clan)) +
   theme_neuropsychology() +
-  ggtitle(clantitle) +
+  ggtitle("") +
   theme(plot.title = element_text(hjust = 0.5, vjust=titlevjust, margin = margin(t = 10, b = -20), colour = "#DFD8C1", size = rel(2), face="bold")) +
   scale_fill_manual(values=clan_palette) +
   guides(fill=FALSE) + 
@@ -72,13 +73,13 @@ ggsave("attendance.png", width = 8, height = 5, units = "in")
 
 
 ## Qualification numbers
-clantitle <- paste("Imperial Advisor\n",tournament,"qualifiers")
-titlevjust <- -max(qualifiers)*3
+clantitle <- paste(tournament,"\nQualifiers")
+titlevjust <- -200
 monymax <- max(qualifiers)/5
 
 ggplot(clan_data, aes(clan, qualifiers, fill = clan)) +
   theme_neuropsychology() +
-  ggtitle(clantitle) +
+  ggtitle("") +
   theme(plot.title = element_text(hjust = 0.5, vjust=titlevjust, margin = margin(t = 10, b = -20), colour = "#DFD8C1", size = rel(2), face="bold")) +
   scale_fill_manual(values=clan_palette) +
   guides(fill=FALSE) + 
@@ -101,13 +102,13 @@ ggsave("qualifiers.png", width = 8, height = 5, units = "in")
 
 
 ## Qualification Rate
-clantitle <- paste("Imperial Advisor\n",tournament,"Qualification Rate")
-titlevjust <- -max(rate)*5
+clantitle <- paste(tournament,"\nQualification Rate")
+titlevjust <- -40
 monymax <- max(rate)/5
 
 ggplot(clan_data, aes(clan, rate, fill = clan)) +
   theme_neuropsychology() +
-  ggtitle(clantitle) +
+  ggtitle("") +
   theme(plot.title = element_text(hjust = 0.5, vjust=titlevjust, margin = margin(t = 10, b = -20), colour = "#DFD8C1", size = rel(2), face="bold")) +
   scale_fill_manual(values=clan_palette) +
   guides(fill=FALSE) + 

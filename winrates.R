@@ -11,7 +11,7 @@ pacman::p_load("ggplot2","dplyr","tidyr","readr","purrr","tibble","psych","ggpub
 
 
 # User defined variables
-startdate <- as.Date('2017-12-14')
+startdate <- as.Date('2017-12-22')
 enddate <- Sys.Date()
 
 
@@ -52,11 +52,12 @@ clanplot <- function(x,clancolor){
   rate <- c(WinRate(x,'Crab'),WinRate(x,'Crane'),WinRate(x,'Dragon'),WinRate(x,'Lion'), WinRate(x,'Phoenix'), WinRate(x,'Scorpion'), WinRate(x,'Unicorn'),WinRate('Crab',x),WinRate('Crane',x),WinRate('Dragon',x),WinRate('Lion',x), WinRate('Phoenix',x), WinRate('Scorpion',x), WinRate('Unicorn',x))
   result <- c('Win','Win','Win','Win','Win','Win','Win','Loss','Loss','Loss','Loss','Loss','Loss','Loss')
   windata <- data.frame(clan, rate, result)
-  
+  totalgames <- nrow(with(games, games[(games$p1_clan==x | games$p2_clan==x),]))
+    
   # Chart it all
   g <- ggplot(windata, aes(clan, rate))
   g +geom_bar(stat = "identity", aes(fill = clan)) +
-    scale_x_discrete(limits = rev(levels(windata$clan))) +
+    scale_x_discrete(limits = c('Unicorn','Scorpion','Phoenix','Lion','Dragon','Crane','Crab')) +
     scale_fill_manual(values = clan_palette) +
     geom_bar(colour="black",stat = "identity", fill=clancolor, aes(alpha = result)) +
     scale_alpha_manual(values=c(0,1),
@@ -65,7 +66,7 @@ clanplot <- function(x,clancolor){
                        labels=c("Win", "Loss")) +
     theme_minimal() +
     xlab("") +
-    ylab(paste0(startdate," to ", enddate)) +
+    ylab(paste0(startdate," to ", enddate, ", ", totalgames, " games in total")) +
     ggtitle(paste0(x," Clan Win Rate"))+
     theme(legend.position="none") +
     theme(plot.title = element_text(hjust = 0.5)) +

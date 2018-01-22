@@ -9,63 +9,64 @@ require("DiagrammeR")
 # Updated for PAX
 
 # Enter  name of Tournament
-tournament <- "Pax Unplugged - Grand Kotei"
+tournament <- "Warpcon"
 
 # Clan Colors
-crab <- '#4C5660'
-crane <- '#98AEAB'
-dragon <- '#567C63'
-lion <- '#AF9445'
-phoenix <- '#B47741'
-scorpion <- '#8C3D2E'
-unicorn <- '#6D5472'
-neutral <- '#888888'
+crab <- '4C5660'
+crane <- '98AEAB'
+dragon <- '567C63'
+lion <- 'AF9445'
+phoenix <- 'B47741'
+scorpion <- '8C3D2E'
+unicorn <- '6D5472'
+neutral <- '888888'
+
 
 # Enter names and color codes for top 16
-name16a <-"Stephen Didion"; clan16a <-"4C5660"
-name16b <-"Alex Tessier"; clan16b <-"567C63"
-name16c <-"Francis Mercer"; clan16c <-"8C3D2E"
-name16d <-"Alex Jacobs"; clan16d <-"567C63"
-name16e <-"Timothy Wells"; clan16e <-"AF9445"
-name16f <-"Kevin Becerra"; clan16f <-"567C63"
-name16g <-"David Gearhart"; clan16g <-"567C63"
-name16h <-"Eric Ridlon"; clan16h <-"AF9445"
-name16i <-"Robert Hebert"; clan16i <-"8C3D2E"
-name16j <-"Ronnie Szutu"; clan16j <-"98AEAB"
-name16k <-"Tony Kwok"; clan16k <-"8C3D2E"
-name16l <-"Zachary Devine"; clan16l <-"8C3D2E"
-name16m <-"Kyle Wislocky"; clan16m <-"98AEAB"
-name16n <-"Trevor Holmes"; clan16n <-"AF9445"
-name16o <-"James Balthis"; clan16o <-"8C3D2E"
-name16p <-"Edward Kim"; clan16p <-"567C63"
+name16a <-" "; clan16a <- neutral
+name16b <-" "; clan16b <- neutral
+name16c <-" "; clan16c <- neutral
+name16d <-" "; clan16d <- neutral
+name16e <-" "; clan16e <- neutral
+name16f <-" "; clan16f <- neutral
+name16g <-" "; clan16g <- neutral
+name16h <-" "; clan16h <- neutral
+name16i <-" "; clan16i <- neutral
+name16j <-" "; clan16j <- neutral
+name16k <-" "; clan16k <- neutral
+name16l <-" "; clan16l <- neutral
+name16m <-" "; clan16m <- neutral
+name16n <-" "; clan16n <- neutral
+name16o <-" "; clan16o <- neutral
+name16p <-" "; clan16p <- neutral
 
 # Enter names and color codes for top 8
-name8a <-"Stephen Didion"; clan8a <-"4C5660"
-name8b <-"Francis Mercer"; clan8b <-"8C3D2E"
-name8c <-"Timothy Wells"; clan8c <-"AF9445"
-name8d <-"David Gearhart"; clan8d <-"567C63"
-name8e <-"Ronnie Szutu"; clan8e <-"98AEAB"
-name8f <-"Zachary Devine"; clan8f <-"8C3D2E"
-name8g <-"Trevor Holmes"; clan8g <-"AF9445"
-name8h <-"James Balthis"; clan8h <-"8C3D2E"
+name8a <-" "; clan8a <- neutral
+name8b <-" "; clan8b <- neutral
+name8c <-" "; clan8c <- neutral
+name8d <-" "; clan8d <- neutral
+name8e <-" "; clan8e <- neutral
+name8f <-" "; clan8f <- neutral
+name8g <-" "; clan8g <- neutral
+name8h <-" "; clan8h <- neutral
 
 # Enter names and color codes for top 4
-name4a <-"Stephen Didion"; clan4a <-"4C5660"
-name4b <-"Timothy Wells"; clan4b <-"AF9445"
-name4c <-"Zachary Devine"; clan4c <-"8C3D2E"
-name4d <-"Trevor Holmes"; clan4d <-"AF9445"
+name4a <-" "; clan4a <- neutral
+name4b <-" "; clan4b <- neutral
+name4c <-" "; clan4c <- neutral
+name4d <-" "; clan4d <- neutral
 
 # Enter names and color codes for top 2
-name2a <-"Stephen Didion"; clan2a <-"4C5660"
-name2b <-"Trevor Holmes"; clan2b <-"AF9445"
+name2a <-" "; clan2a <- neutral
+name2b <-" "; clan2b <- neutral
 
 # Enter names and color codes for winner
-name1 <-"Stephen Didion"; clan1 <-"4C5660"
+name1 <-" "; clan1 <- neutral
 
 x <- paste0("
             digraph boxes_and_circles {
             # a 'graph' statement
-            graph [bgcolor = white, overlap = true, fontsize = 50, fontname = Arial, rankdir = LR, labelloc='t', label='Imperial Adviser - ",tournament," - Top 16']
+            graph [bgcolor = white, overlap = true, fontsize = 50, fontname = Arial, rankdir = LR, labelloc='t', label='IA - ",tournament," - Top 16']
             
             # several 'node' statements
             node [	shape = box,
