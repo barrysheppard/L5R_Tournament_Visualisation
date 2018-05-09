@@ -11,18 +11,38 @@ pacman::p_load("ggplot2","dplyr","tidyr","readr","purrr","tibble","psych","ggpub
 
 
 # User defined variables
-startdate <- as.Date('2017-12-22')
+startdate <- as.Date('2018-04-16')
 enddate <- Sys.Date()
 
 
-# This contacts the Lotus Pavilion website and downloads every game after the start date through the API
+# This contacts the Lotus Pavilion website and downloads every game 
+# after the start date through the API
+# The API  is https://thelotuspavilion.com/static/apidoc/v3.html
+# Due to changes in the API only 50 results appear per page
+# So we need to cycle through until we don't get a result anymore
+
 options(stringsAsFactors = FALSE)
 url  <- "http://thelotuspavilion.com"
-path <- paste0("/api/v2/json/games?after=",startdate)
-raw.result <- GET(url = url, path = path)
-this.raw.content <- rawToChar(raw.result$content)
-all_games <- fromJSON(this.raw.content)
+page <- 1
+finished <- 0
+path <- paste0("/api/v3/games?after=",startdate,"&page=")
 
+while(finished != 1){
+  path <- paste0(path,page)
+  raw.result <- GET(url = url, path = path)
+  this.raw.content <- rawToChar(raw.result$content)
+  if (this.raw.content == "[]") {
+    finished <- 1
+  }
+  else {
+    if (page == 1) {
+      all_games <- fromJSON(this.raw.content)
+    } else {
+      all_games <- rbind(all_games, fromJSON(this.raw.content))
+    }
+    page <- page + 1
+  }
+}
 
 # remove cases where there is na, this includes Byes
 games <- all_games[complete.cases(all_games),]
