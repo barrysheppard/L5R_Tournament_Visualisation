@@ -5,14 +5,43 @@
 # Clear the data at the start for a tidy environment
 # rm(list=ls())
 # As we want to save files we're setting the directory to the same as the plot.R file
- setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
+# this is the load from Lotus
+ 
+# User defined variables for the load from Lotus Pavilion
+startdate <- as.Date("2018-01-01")
+enddate <- Sys.Date()
+tournament_id <- 1885
+ 
+# Load from Lotus Pavilion if possible
+# Returns tournament_players
+source("load_tournament.R", print.eval = TRUE)
+
+# This next step gets attendance for each clan
+Crab <- length(which(tournament_players$clan == 'Crab'))
+Crane <- length(which(tournament_players$clan == 'Crane'))
+Dragon <- length(which(tournament_players$clan == 'Dragon'))
+Lion <- length(which(tournament_players$clan == 'Lion'))
+Phoenix <- length(which(tournament_players$clan == 'Phoenix'))
+Scorpion <- length(which(tournament_players$clan == 'Scorpion'))
+Unicorn <- length(which(tournament_players$clan == 'Unicorn'))
+attendance <- c(Crab, Crane, Dragon, Lion, Phoenix, Scorpion, Unicorn)
+
+
+# If no Lotus Pavilion then manually enter attendance
+# attendance <- c(4,4,4,4,1,3,1) 
 
 # Barchart for breakdown of clans in a tournament etc.
 # In order of Crab, Crane, Dragon, Lion, Phoenix, Scorpion, Unicorn
-tournament <- "Cork Kotei"
-attendance <- c(30,50,30,30,30,30,10) 
-qualifiers <- c(4,0,10,0,5,2,0) 
+tournament <- "Houston Kotei"
+qualifiers <- c(0,1,1,1,0,2,0) 
 rate <- round(100*qualifiers/attendance)
+backgroundimage <- "background_houston.jpg"
+
+# tournament <- "Atlanta Kotei"
+# backgroundimage <- "background_atlanta.jpg"
+
 
 # Saving to dataframe
 clan <- c("Crab","Crane", "Dragon", "Lion", "Phoenix", "Scorpion", "Unicorn") 
@@ -23,7 +52,7 @@ clan_data = data.frame(clan, attendance, qualifiers, rate)
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(jpeg, png, ggplot2, grid, neuropsychology)
 clan_palette <- c("#4C5660","#98AEAB", "#567C63", "#AF9445", "#B47741", "#8C3D2E", "#6D5472")
-image <- jpeg::readJPEG("warpconbackground.jpg")
+image <- jpeg::readJPEG(backgroundimage)
 crab <- png::readPNG("mon_crab.png")
 crabmon <- grid::rasterGrob(crab, interpolate = T)
 crane <- png::readPNG("mon_crane.png")
@@ -40,32 +69,32 @@ unicorn <- png::readPNG("mon_unicorn.png")
 unicornmon <- grid::rasterGrob(unicorn, interpolate = T)
 
 
-
-
-
 ## Attendance
 clantitle <- paste(tournament,"\nAttendance")
-titlevjust <- -max(attendance)*5
-monymax <- max(attendance)/5
+titlevjust <- -max(attendance)*4
+monymax <- max(attendance)/4
+
+# Plot the chart
+
 
 ggplot(clan_data, aes(clan, attendance, fill = clan)) +
   theme_neuropsychology() +
   ggtitle("") +
-  theme(plot.title = element_text(hjust = 0.5, vjust=titlevjust, margin = margin(t = 10, b = -20), colour = "#DFD8C1", size = rel(2), face="bold")) +
-  scale_fill_manual(values=clan_palette) +
-  guides(fill=FALSE) + 
+  theme(plot.title = element_text(hjust = 0.5, vjust = titlevjust, margin = margin(t = 10, b = -20), colour = "#DFD8C1", size = rel(2), face = "bold")) +
+  scale_fill_manual(values = clan_palette) +
+  guides(fill = FALSE) + 
   annotation_custom(rasterGrob(image, width = unit(1,"npc"), height = unit(1,"npc")), -Inf, Inf, -Inf, Inf) +
-  geom_bar(stat="identity", position = "dodge", width = .75, colour = 'white', alpha = 0.8) +
+  geom_bar(stat = "identity", position = "dodge", width = .75, colour = 'white', alpha = 0.8) +
   scale_y_continuous('', limits = c(0, max(attendance) + max(attendance) / 3)) +
   scale_x_discrete('') +
-  geom_text(aes(label = ifelse(attendance>0,round(attendance),''), ymax = 0), size = 7, fontface = 2, colour = 'white', hjust = 0.5, vjust = 1.5) +
-  annotation_custom(crabmon, xmin=0.7, xmax=1.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(cranemon, xmin=1.7, xmax=2.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(dragonmon, xmin=2.7, xmax=3.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(lionmon, xmin=3.7, xmax=4.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(phoenixmon, xmin=4.7, xmax=5.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(scorpionmon, xmin=5.7, xmax=6.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(unicornmon, xmin=6.7, xmax=7.3, ymin=0.2, ymax=monymax)
+  geom_text(aes(label = ifelse(attendance > 0,round(attendance),''), ymax = 0), size = 7, fontface = 2, colour = 'white', hjust = 0.5, vjust = 1.5) +
+  annotation_custom(crabmon, xmin = 0.7, xmax = 1.3, ymin = 0.2, ymax = monymax) +
+  annotation_custom(cranemon, xmin = 1.7, xmax = 2.3, ymin = 0.2, ymax = monymax) +
+  annotation_custom(dragonmon, xmin = 2.7, xmax = 3.3, ymin = 0.2, ymax = monymax) +
+  annotation_custom(lionmon, xmin = 3.7, xmax = 4.3, ymin = 0.2, ymax = monymax) +
+  annotation_custom(phoenixmon, xmin = 4.7, xmax = 5.3, ymin = 0.2, ymax = monymax) +
+  annotation_custom(scorpionmon, xmin = 5.7, xmax = 6.3, ymin = 0.2, ymax = monymax) +
+  annotation_custom(unicornmon, xmin = 6.7, xmax = 7.3, ymin = 0.2, ymax = monymax)
 
 ggsave("attendance.png", width = 8, height = 5, units = "in")
 
@@ -80,28 +109,28 @@ monymax <- max(qualifiers)/5
 ggplot(clan_data, aes(clan, qualifiers, fill = clan)) +
   theme_neuropsychology() +
   ggtitle("") +
-  theme(plot.title = element_text(hjust = 0.5, vjust=titlevjust, margin = margin(t = 10, b = -20), colour = "#DFD8C1", size = rel(2), face="bold")) +
-  scale_fill_manual(values=clan_palette) +
-  guides(fill=FALSE) + 
+  theme(plot.title = element_text(hjust = 0.5, vjust = titlevjust, margin = margin(t = 10, b = -20), colour = "#DFD8C1", size = rel(2), face = "bold")) +
+  scale_fill_manual(values = clan_palette) +
+  guides(fill = FALSE) + 
   annotation_custom(rasterGrob(image, width = unit(1,"npc"), height = unit(1,"npc")), -Inf, Inf, -Inf, Inf) +
-  geom_bar(stat="identity", position = "dodge", width = .75, colour = 'white', alpha = 0.8) +
+  geom_bar(stat = "identity", position = "dodge", width = .75, colour = 'white', alpha = 0.8) +
   scale_y_continuous('', limits = c(0, max(qualifiers) + max(qualifiers) / 3)) +
   scale_x_discrete('') +
-  geom_text(aes(label = ifelse(qualifiers>0,round(qualifiers),''), ymax = 0), size = 7, fontface = 2, colour = 'white', hjust = 0.5, vjust = 1.5) +
-  annotation_custom(crabmon, xmin=0.7, xmax=1.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(cranemon, xmin=1.7, xmax=2.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(dragonmon, xmin=2.7, xmax=3.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(lionmon, xmin=3.7, xmax=4.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(phoenixmon, xmin=4.7, xmax=5.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(scorpionmon, xmin=5.7, xmax=6.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(unicornmon, xmin=6.7, xmax=7.3, ymin=0.2, ymax=monymax)
+  geom_text(aes(label = ifelse(qualifiers > 0,round(qualifiers),''), ymax = 0), size = 7, fontface = 2, colour = 'white', hjust = 0.5, vjust = 1.5) +
+  annotation_custom(crabmon, xmin = 0.7, xmax = 1.3, ymin = 0, ymax = monymax) +
+  annotation_custom(cranemon, xmin = 1.7, xmax = 2.3, ymin = 0., ymax = monymax) +
+  annotation_custom(dragonmon, xmin = 2.7, xmax = 3.3, ymin = 0, ymax = monymax) +
+  annotation_custom(lionmon, xmin = 3.7, xmax = 4.3, ymin = 0, ymax = monymax) +
+  annotation_custom(phoenixmon, xmin = 4.7, xmax = 5.3, ymin = 0, ymax = monymax) +
+  annotation_custom(scorpionmon, xmin = 5.7, xmax = 6.3, ymin = 0, ymax = monymax) +
+  annotation_custom(unicornmon, xmin = 6.7, xmax = 7.3, ymin = 0, ymax = monymax)
 
 ggsave("qualifiers.png", width = 8, height = 5, units = "in")
 
 
 
-
 ## Qualification Rate
+
 clantitle <- paste(tournament,"\nQualification Rate")
 titlevjust <- -40
 monymax <- max(rate)/5
@@ -109,21 +138,21 @@ monymax <- max(rate)/5
 ggplot(clan_data, aes(clan, rate, fill = clan)) +
   theme_neuropsychology() +
   ggtitle("") +
-  theme(plot.title = element_text(hjust = 0.5, vjust=titlevjust, margin = margin(t = 10, b = -20), colour = "#DFD8C1", size = rel(2), face="bold")) +
-  scale_fill_manual(values=clan_palette) +
-  guides(fill=FALSE) + 
+  theme(plot.title = element_text(hjust = 0.5, vjust = titlevjust, margin = margin(t = 10, b = -20), colour = "#DFD8C1", size = rel(2), face = "bold")) +
+  scale_fill_manual(values = clan_palette) +
+  guides(fill = FALSE) + 
   annotation_custom(rasterGrob(image, width = unit(1,"npc"), height = unit(1,"npc")), -Inf, Inf, -Inf, Inf) +
-  geom_bar(stat="identity", position = "dodge", width = .75, colour = 'white', alpha = 0.8) +
+  geom_bar(stat = "identity", position = "dodge", width = .75, colour = 'white', alpha = 0.8) +
   scale_y_continuous('', limits = c(0, max(rate) + max(rate) / 3)) +
   scale_x_discrete('') +
-  geom_text(aes(label = ifelse(rate>0,paste(round(rate),'%'),''), ymax = 0), size = 7, fontface = 2, colour = 'white', hjust = 0.5, vjust = 1.5) +
-  annotation_custom(crabmon, xmin=0.7, xmax=1.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(cranemon, xmin=1.7, xmax=2.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(dragonmon, xmin=2.7, xmax=3.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(lionmon, xmin=3.7, xmax=4.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(phoenixmon, xmin=4.7, xmax=5.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(scorpionmon, xmin=5.7, xmax=6.3, ymin=0.2, ymax=monymax) +
-  annotation_custom(unicornmon, xmin=6.7, xmax=7.3, ymin=0.2, ymax=monymax)
+  geom_text(aes(label = ifelse(rate > 0,paste(round(rate),'%'),''), ymax = 0), size = 7, fontface = 2, colour = 'white', hjust = 0.5, vjust = 1.5) +
+  annotation_custom(crabmon, xmin = 0.7, xmax = 1.3, ymin = 0.2, ymax = monymax) +
+  annotation_custom(cranemon, xmin = 1.7, xmax = 2.3, ymin = 0.2, ymax = monymax) +
+  annotation_custom(dragonmon, xmin = 2.7, xmax = 3.3, ymin = 0.2, ymax = monymax) +
+  annotation_custom(lionmon, xmin = 3.7, xmax = 4.3, ymin = 0.2, ymax = monymax) +
+  annotation_custom(phoenixmon, xmin = 4.7, xmax = 5.3, ymin = 0.2, ymax = monymax) +
+  annotation_custom(scorpionmon, xmin = 5.7, xmax = 6.3, ymin = 0.2, ymax = monymax) +
+  annotation_custom(unicornmon, xmin = 6.7, xmax = 7.3, ymin = 0.2, ymax = monymax)
 
 ggsave("qual_rate.png", width = 8, height = 5, units = "in")
 

@@ -9,7 +9,7 @@ require("DiagrammeR")
 # Updated for PAX
 
 # Enter  name of Tournament
-tournament <- "Gencon Grand Kotei"
+tournament <- "Birmingham Grand Kotei"
 
 # Clan Colors
 crab <- '4C5660'
@@ -23,31 +23,32 @@ neutral <- '888888'
 
 
 
+
 # Players in Seed order
-seed01 <- "Johnny Shen"
-clan01 <- scorpion
-seed02 <- "James Balthis"
-clan02 <- crane
-seed03 <- "Aneil Seetharam"
-clan03 <- dragon
-seed04 <- "Trevor Holmes"
-clan04 <- lion
-seed05 <- "Steven Palumbo"
-clan05 <- scorpion
-seed06 <- "Christopher Pottorf "
-clan06 <- crane
-seed07 <- "Luke Macdowall"
-clan07 <- scorpion
-seed08 <- "William Zhang"
-clan08 <- dragon
-seed09 <- "Jon Fernandez"
-clan09 <- phoenix
-seed10 <- "Rob Perry"
-clan10 <- crab
-seed11 <- "Dan Mui"
-clan11 <- lion
-seed12 <- "Kilian Downey"
-clan12 <- unicorn
+seed01 <- ""
+clan01 <- neutral
+seed02 <- ""
+clan02 <- neutral
+seed03 <- ""
+clan03 <- neutral
+seed04 <- ""
+clan04 <- neutral
+seed05 <- ""
+clan05 <- neutral
+seed06 <- ""
+clan06 <- neutral
+seed07 <- ""
+clan07 <- neutral
+seed08 <- ""
+clan08 <- neutral
+seed09 <- ""
+clan09 <- neutral
+seed10 <- ""
+clan10 <- neutral
+seed11 <- ""
+clan11 <- neutral
+seed12 <- ""
+clan12 <- neutral
 seed13 <- ""
 clan13 <- neutral
 seed14 <- ""
@@ -77,74 +78,42 @@ name16n <- seed14; clan16n <- clan14
 name16o <- seed06; clan16o <- clan06
 name16p <- seed11; clan16p <- clan11
 
-# Modifications
-name16a <- "William Harrison"; clan16a <- lion
-name16b <- "Travis Cooper"; clan16b <- crane
-name16c <- "Tom Kirchgenser"; clan16c <- lion
-name16d <- "Arash Afghahi"; clan16d <- dragon
-name16e <- "Josh Johnson"; clan16e <- scorpion
-name16f <- "Aneil Seetharam"; clan16f <- dragon
-name16g <- "Joe Habes"; clan16g <- crab
-name16h <- "Max Williams"; clan16h <- crab
-name16i <- "Nick Soto"; clan16i <- phoenix
-name16j <- "Travis McDaniel"; clan16j <- phoenix
-name16k <- "Matthew Thomson"; clan16k <- dragon
-name16l <- "Bradey Thiele"; clan16l <- phoenix
-name16m <- "Steve Palumbo"; clan16m <- scorpion
-name16n <- "James Balthis"; clan16n <- crane
-name16o <- "Christopher NeCamp"; clan16o <- phoenix
-name16p <- "Mike George"; clan16p <- crane
-
-
-
-
 # Enter names and color codes for top 8
 name8a <- name16a; clan8a <- clan16a
-name8b <- name16c; clan8b <- clan16c
-name8c <- name16f; clan8c <- clan16f
-name8d <- name16h; clan8d <- clan16h
-name8e <- name16j; clan8e <- clan16j
-name8f <- name16l; clan8f <- clan16l
+name8b <- name16d; clan8b <- clan16d
+name8c <- name16e; clan8c <- clan16e
+name8d <- name16g; clan8d <- clan16g
+name8e <- name16i; clan8e <- clan16i
+name8f <- name16k; clan8f <- clan16k
 name8g <- name16m; clan8g <- clan16m
-name8h <- name16p; clan8h <- clan16p
+name8h <- name16o; clan8h <- clan16o
 
-# Modifications
- #name8a <- ""; clan8a <- neutral
- #name8b <- ""; clan8b <- neutral
- #name8c <- ""; clan8c <- neutral
- #name8d <- ""; clan8d <- neutral
- #name8e <- ""; clan8e <- neutral
- #name8f <- ""; clan8f <- neutral
- #name8g <- ""; clan8g <- neutral
- #name8h <- ""; clan8h <- neutral
+# name4a <- ""; clan4a <- neutral
+#name8b <- ""; clan8b <- neutral
+#name8c <- ""; clan8c <- neutral
+#name4b <- ""; clan4b <- neutral
+#name4c <- ""; clan4c <- neutral
+#name8f <- ""; clan8f <- neutral
+#name4d <- ""; clan4d <- neutral
+# name8h <- ""; clan8h <- neutral
 
 
 # Enter names and color codes for top 4
 name4a <- name8a; clan4a <- clan8a
-name4b <- name8c; clan4b <- clan8c
-name4c <- name8e; clan4c <- clan8e
-name4d <- name8h; clan4d <- clan8h
-
-# Modifications
-#name4a <- ""; clan4a <- neutral
-#name4b <- ""; clan4b <- neutral
-#name4c <- ""; clan4c <- neutral
-#name4d <- ""; clan4d <- neutral
-
+name4b <- name8d; clan4b <- clan8d
+name4c <- name8f; clan4c <- clan8f
+name4d <- name8g; clan4d <- clan8g 
 
 # Enter names and color codes for top 2
-name2a <- name4b; clan2a <- clan4b
-name2b <- name4c; clan2b <- clan4c
 
-# To clear while games are in progress
 #name2a <- ""; clan2a <- neutral
 #name2b <- ""; clan2b <- neutral
 
+name2a <- name4b; clan2a <- clan4b
+name2b <- name4d; clan2b <- clan4d
 
 # Enter names and color codes for winner
-name1 <- name2a; clan1 <- clan2a
-
-# To clear while games are in progress
+name1 <- name2b; clan1 <- clan2b
 #name1 <- ""; clan1 <- neutral
 
 x <- paste0("
