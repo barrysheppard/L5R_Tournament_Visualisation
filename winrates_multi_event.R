@@ -7,14 +7,13 @@
 rm(list = ls())
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load("ggplot2","dplyr","tidyr","readr","purrr","tibble","psych","ggpubr","httr","jsonlite","lubridate", "gtools", "gridExtra", "png")
-
+pacman::p_load("ggplot2","dplyr","tidyr","readr","purrr","tibble","psych","ggpubr","httr","jsonlite","lubridate", "gtools", "gridExtra", "png", "grid")
 
 # User defined variables
-startdate <- as.Date('2019-03-02')
+startdate <- as.Date('2019-05-04')
 enddate <- Sys.Date()
-tournament_name <- "EC Padis Spain"
-tournament_id <- "3588"
+tournament_name <- "Birmingham Grand Kotei 2019 - Top Cut Only"
+tournament_id <- "4142"
 
 
 # This contacts the Lotus Pavilion website and downloads every game 
@@ -32,6 +31,7 @@ finished <- 0
 path <- paste0("/api/v3/games?tournament_id=",tournament_id,"&page=")
 
 
+# First Event
 while (finished != 1) {
   print(page)
   path1 <- paste0(path,page)
@@ -46,13 +46,92 @@ while (finished != 1) {
     } else {
       new_games <- fromJSON(this.raw.content)
       all_games <- smartbind(all_games, fromJSON(this.raw.content))
-
+      
     }
   }
   page <- page + 1
 }
+total_games <- all_games
 
+# Second Event
+tournament_id <- "4143"
+path <- paste0("/api/v3/games?tournament_id=",tournament_id,"&page=")
+page <- 1
+finished <- 0
+while (finished != 1) {
+  print(page)
+  path1 <- paste0(path,page)
+  raw.result <- GET(url = url, path = path1)
+  this.raw.content <- rawToChar(raw.result$content)
+  if (this.raw.content == "[]") {
+    finished <- 1
+  }
+  else {
+    if (page == 1) {
+      all_games <- fromJSON(this.raw.content)
+    } else {
+      new_games <- fromJSON(this.raw.content)
+      all_games <- smartbind(all_games, fromJSON(this.raw.content))
+      
+    }
+  }
+  page <- page + 1
+}
+total_games <- rbind(total_games, all_games)
 
+# Third Event
+tournament_id <- "4145"
+path <- paste0("/api/v3/games?tournament_id=",tournament_id,"&page=")
+page <- 1
+finished <- 0
+while (finished != 1) {
+  print(page)
+  path1 <- paste0(path,page)
+  raw.result <- GET(url = url, path = path1)
+  this.raw.content <- rawToChar(raw.result$content)
+  if (this.raw.content == "[]") {
+    finished <- 1
+  }
+  else {
+    if (page == 1) {
+      all_games <- fromJSON(this.raw.content)
+    } else {
+      new_games <- fromJSON(this.raw.content)
+      all_games <- smartbind(all_games, fromJSON(this.raw.content))
+      
+    }
+  }
+  page <- page + 1
+}
+total_games <- rbind(total_games, all_games)
+
+# Fourth Event
+tournament_id <- "4144"
+path <- paste0("/api/v3/games?tournament_id=",tournament_id,"&page=")
+page <- 1
+finished <- 0
+while (finished != 1) {
+  print(page)
+  path1 <- paste0(path,page)
+  raw.result <- GET(url = url, path = path1)
+  this.raw.content <- rawToChar(raw.result$content)
+  if (this.raw.content == "[]") {
+    finished <- 1
+  }
+  else {
+    if (page == 1) {
+      all_games <- fromJSON(this.raw.content)
+    } else {
+      new_games <- fromJSON(this.raw.content)
+      all_games <- smartbind(all_games, fromJSON(this.raw.content))
+      
+    }
+  }
+  page <- page + 1
+}
+total_games <- rbind(total_games, all_games)
+
+all_games <- total_games
 
 # remove cases where there is na, this includes Byes
 games <- all_games[!is.na(all_games$p1_clan),]
@@ -76,15 +155,13 @@ games$winner[games$p1_points < games$p2_points] <- games$p2_clan[games$p1_points
 WinRate <- function(x,y) {
   total <- nrow(with(games, games[(games$p1_clan==x & games$p2_clan==y) | (games$p1_clan==y & games$p2_clan==x),]))
   wins <- nrow(with(games, games[((games$p1_clan==x & games$p2_clan==y) | (games$p1_clan==y & games$p2_clan==x)) & games$winner==x,]))
-  if(x==y) 50 else 100 * wins / total
+  if(x==y | total==0) 50 else 100 * wins / total
 }
-
 
 TotalPairs <- function(x, y) {
   # Take in the two clans x and y. Returns the total number of games with that pairing
   nrow(with(games, games[(games$p1_clan == x & games$p2_clan == y) | (games$p1_clan == y & games$p2_clan == x), ]))
 }
-
 
 # Clan Palette
 clan_palette <- c("#6D5472", "#8C3D2E", "#B47741", "#AF9445", "#567C63", "#98AEAB", "#4C5660")
@@ -98,48 +175,29 @@ clanplot <- function(x, clancolor) {
   result <- c("Win", "Win", "Win", "Win", "Win", "Win", "Win", "Loss", "Loss", "Loss", "Loss", "Loss", "Loss", "Loss")
   windata <- data.frame(clan, rate, result, clanpairs)
   totalgames <- nrow(with(games, games[(games$p1_clan == x | games$p2_clan == x), ]))
-
+  
   # Chart it all
   g <- ggplot(windata, aes(clan, rate))
   g + geom_bar(stat = "identity", aes(fill = clan)) +
-     scale_x_discrete(breaks = c("Crab", "Crane", "Dragon", "Lion", "Phoenix", "Scorpion", "Unicorn"), labels = clanpairs) +
-     scale_fill_manual(values = clan_palette) +
-     geom_bar(colour = "black", stat = "identity", fill = clancolor, aes(alpha = result)) +
-     scale_alpha_manual(
-       values = c(0, 1),
-       name = "Win Rate",
-       breaks = c("Win", "Loss"), # can use to set order
+    scale_x_discrete(breaks = c("Crab", "Crane", "Dragon", "Lion", "Phoenix", "Scorpion", "Unicorn"), labels = clanpairs) +
+    scale_fill_manual(values = clan_palette) +
+    geom_bar(colour = "black", stat = "identity", fill = clancolor, aes(alpha = result)) +
+    scale_alpha_manual(
+      values = c(0, 1),
+      name = "Win Rate",
+      breaks = c("Win", "Loss"), # can use to set order
       labels = c("Win", "Loss")
-     ) +
-     theme_minimal() +
-     xlab("") +
-     # ylab(paste0(tournament_name, ", ", totalgames, " games in total")) +
-     # ggtitle(paste0(x, " Clan Win Rate")) +
-     ylab(paste0(totalgames, " games in total")) +
-     ggtitle(paste0(x, " Clan")) +
-     theme(legend.position = "none") +
-     theme(plot.title = element_text(hjust = 0.5)) +
-     theme(axis.text.x = element_blank()) +
-     geom_text(aes(label = paste0(round(rate), "%")), position = position_stack(vjust = 0.5), color = "white") +
-     coord_flip()
+    ) +
+    theme_minimal() +
+    xlab("") +
+    ylab(paste0(totalgames, " games in total")) +
+    ggtitle(paste0(x, " Clan")) +
+    theme(legend.position = "none") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    theme(axis.text.x = element_blank()) +
+    geom_text(aes(label = paste0(round(rate), "%")), position = position_stack(vjust = 0.5), color = "white") +
+    coord_flip()
 }
-
-# 
-# # Produce the charts and save them
-# clanplot('Crab','#4C5660')
-# ggsave("winrate_crab.png",width = 4, height = 4)
-# clanplot('Crane','#98AEAB')
-# ggsave("winrate_crane.png",width = 4, height = 4)
-# clanplot('Dragon','#567C63')
-# ggsave("winrate_dragon.png",width = 4, height = 4)
-# clanplot('Lion','#AF9445')
-# ggsave("winrate_lion.png",width = 4, height = 4)
-# clanplot('Phoenix','#B47741')
-# ggsave("winrate_phoenix.png",width = 4, height = 4)
-# clanplot('Scorpion','#8C3D2E')
-# ggsave("winrate_scorpion.png",width = 4, height = 4)
-# clanplot('Unicorn','#6D5472')
-# ggsave("winrate_unicorn.png",width = 4, height = 4)
 
 # Logo
 logo_png <- png::readPNG("logo.png")

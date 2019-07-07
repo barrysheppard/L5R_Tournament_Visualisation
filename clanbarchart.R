@@ -16,7 +16,7 @@ pacman::p_load(jpeg, png, ggplot2, grid, neuropsychology, shadowtext)
 # User defined variables for the load from Lotus Pavilion
 startdate <- as.Date("2018-11-03")
 enddate <- Sys.Date()
-tournament_id <- 4357
+tournament_id <- 4367
 
 # https://thelotuspavilion.com/tournaments/3972
 
@@ -40,9 +40,9 @@ attendance <- c(Crab, Crane, Dragon, Lion, Phoenix, Scorpion, Unicorn)
 
 # Barchart for breakdown of clans in a tournament etc.
 # In order of Crab, Crane, Dragon, Lion, Phoenix, Scorpion, Unicorn
-tournament <- "Nürnberg Kotei"
+tournament <- "Nürnberg EC Event"
 #qualifiers <- c(3,8,4,2,5,7,2) # Day 1A
-qualifiers <- c(2,2,1,0,2,1,0) 
+qualifiers <- c(1,4,0,0,0,2,1) 
 rate <- round(100*qualifiers/attendance)
 backgroundimage <- "background.jpg"
 
@@ -74,7 +74,7 @@ unicornmon <- grid::rasterGrob(unicorn, interpolate = T)
 
 ## Attendance
 clantitle <- paste(tournament,"\nAttendance")
-titlevjust <- -max(attendance)*1
+titlevjust <- -max(attendance)/1.2
 monymax <- max(attendance)/4
 
 # Plot the chart
@@ -126,7 +126,6 @@ ggplot(clan_data, aes(clan, qualifiers, fill = clan)) +
   annotation_custom(scorpionmon, xmin = 5.7, xmax = 6.3, ymin = 0, ymax = monymax) +
   annotation_custom(unicornmon, xmin = 6.7, xmax = 7.3, ymin = 0, ymax = monymax) +
   geom_shadowtext(aes(label = ifelse(qualifiers > 0,round(qualifiers),''), ymax = 0), size = 7, fontface = 2, colour = 'white', hjust = 0.5, vjust = 1.5)
-
 
 ggsave("qualifiers.png", width = 8, height = 5, units = "in")
 

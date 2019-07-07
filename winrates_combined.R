@@ -7,14 +7,13 @@
 rm(list = ls())
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load("ggplot2","dplyr","tidyr","readr","purrr","tibble","psych","ggpubr","httr","jsonlite","lubridate", "gtools", "gridExtra", "png")
-
+pacman::p_load("ggplot2","dplyr","tidyr","readr","purrr","tibble","psych","ggpubr","httr","jsonlite","lubridate", "gtools", "gridExtra", "png", "grid")
 
 # User defined variables
-startdate <- as.Date('2019-03-02')
+startdate <- as.Date('2019-05-04')
 enddate <- Sys.Date()
-tournament_name <- "EC Evansville"
-tournament_id <- "3616"
+tournament_name <- "Nürnberg Kotei 2019- End of Event"
+tournament_id <- "4357"
 
 
 # This contacts the Lotus Pavilion website and downloads every game 

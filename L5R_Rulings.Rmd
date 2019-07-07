@@ -25,8 +25,7 @@ this.raw.content <- rawToChar(raw.result$content)
 nchar(this.raw.content)
 substr(this.raw.content, 1, 100)
 this.content <- fromJSON(this.raw.content)
-cards <- this.content[[1]]
-
+cards <- this.content[[2]]
 
 ## This gets the rulings
 
@@ -38,7 +37,7 @@ nchar(this.raw.content)
 substr(this.raw.content, 1, 100)
 this.content <- fromJSON(this.raw.content)
 
-rulings <- this.content[[1]]
+rulings <- this.content[[2]]
 rulings <- rulings[order(rulings$card),]
 
 
