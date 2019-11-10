@@ -16,7 +16,7 @@ pacman::p_load(jpeg, png, ggplot2, grid, neuropsychology, shadowtext)
 # User defined variables for the load from Lotus Pavilion
 tournament_id <- 4879
 qual_points <-  42
-tournament <- "Winter Court 2019 1A"
+tournament <- "Winter Court 2019 Day 2"
 
 # Load from Lotus Pavilion if possible
 # Returns tournament_players
