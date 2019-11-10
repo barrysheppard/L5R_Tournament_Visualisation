@@ -12,8 +12,8 @@ pacman::p_load("ggplot2","dplyr","tidyr","readr","purrr","tibble","psych","ggpub
 # User defined variables
 startdate <- as.Date('2019-05-04')
 enddate <- Sys.Date()
-tournament_name <- "Nürnberg Kotei 2019- End of Event"
-tournament_id <- "4357"
+tournament_name <- "Madrid Grand Championship"
+tournament_id <- "4746"
 
 
 # This contacts the Lotus Pavilion website and downloads every game 

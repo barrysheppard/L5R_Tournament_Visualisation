@@ -12,8 +12,8 @@ pacman::p_load("ggplot2","dplyr","tidyr","readr","purrr","tibble","psych","ggpub
 # User defined variables
 startdate <- as.Date('2019-05-04')
 enddate <- Sys.Date()
-tournament_name <- "Birmingham Grand Kotei 2019 - Top Cut Only"
-tournament_id <- "4142"
+tournament_name <- "Winter Court 2019 - All Games"
+tournament_id <- "4879"
 
 
 # This contacts the Lotus Pavilion website and downloads every game 
@@ -54,7 +54,7 @@ while (finished != 1) {
 total_games <- all_games
 
 # Second Event
-tournament_id <- "4143"
+tournament_id <- "4883"
 path <- paste0("/api/v3/games?tournament_id=",tournament_id,"&page=")
 page <- 1
 finished <- 0
@@ -80,7 +80,7 @@ while (finished != 1) {
 total_games <- rbind(total_games, all_games)
 
 # Third Event
-tournament_id <- "4145"
+tournament_id <- "4906"
 path <- paste0("/api/v3/games?tournament_id=",tournament_id,"&page=")
 page <- 1
 finished <- 0
@@ -103,33 +103,11 @@ while (finished != 1) {
   }
   page <- page + 1
 }
-total_games <- rbind(total_games, all_games)
 
-# Fourth Event
-tournament_id <- "4144"
-path <- paste0("/api/v3/games?tournament_id=",tournament_id,"&page=")
-page <- 1
-finished <- 0
-while (finished != 1) {
-  print(page)
-  path1 <- paste0(path,page)
-  raw.result <- GET(url = url, path = path1)
-  this.raw.content <- rawToChar(raw.result$content)
-  if (this.raw.content == "[]") {
-    finished <- 1
-  }
-  else {
-    if (page == 1) {
-      all_games <- fromJSON(this.raw.content)
-    } else {
-      new_games <- fromJSON(this.raw.content)
-      all_games <- smartbind(all_games, fromJSON(this.raw.content))
-      
-    }
-  }
-  page <- page + 1
-}
-total_games <- rbind(total_games, all_games)
+# Adding this as top 32 cut didn't have stronghold names
+library(gtools)
+total_games <- smartbind(total_games, all_games)
+
 
 all_games <- total_games
 

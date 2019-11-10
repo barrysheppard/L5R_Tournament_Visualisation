@@ -14,9 +14,11 @@ pacman::p_load(jpeg, png, ggplot2, grid, neuropsychology, shadowtext)
 # this is the load from Lotus
  
 # User defined variables for the load from Lotus Pavilion
-tournament_id <- 4879
-qual_points <-  42
-tournament <- "Winter Court 2019 1A"
+startdate <- as.Date("2018-11-03")
+enddate <- Sys.Date()
+tournament_id <- 4548
+
+# https://thelotuspavilion.com/tournaments/3972
 
 # Load from Lotus Pavilion if possible
 # Returns tournament_players
@@ -32,25 +34,18 @@ Scorpion <- length(which(tournament_players$clan == 'Scorpion'))
 Unicorn <- length(which(tournament_players$clan == 'Unicorn'))
 attendance <- c(Crab, Crane, Dragon, Lion, Phoenix, Scorpion, Unicorn)
 
-# Next we get those who qualified.
-# For this we need to specify the number of points required.
-Crab <- length(which(tournament_players$clan == 'Crab' & tournament_players$points >= qual_points))
-Crane <- length(which(tournament_players$clan == 'Crane' & tournament_players$points >= qual_points))
-Dragon <- length(which(tournament_players$clan == 'Dragon' & tournament_players$points >= qual_points))
-Lion <- length(which(tournament_players$clan == 'Lion' & tournament_players$points >= qual_points))
-Phoenix <- length(which(tournament_players$clan == 'Phoenix' & tournament_players$points >= qual_points))
-Scorpion <- length(which(tournament_players$clan == 'Scorpion' & tournament_players$points >= qual_points))
-Unicorn <- length(which(tournament_players$clan == 'Unicorn' & tournament_players$points >= qual_points))
-qualifiers <- c(Crab, Crane, Dragon, Lion, Phoenix, Scorpion, Unicorn)
+
+# If no Lotus Pavilion then manually enter attendance
+#  attendance <- c(8,9,5,3,8,9,9)
 
 # Barchart for breakdown of clans in a tournament etc.
 # In order of Crab, Crane, Dragon, Lion, Phoenix, Scorpion, Unicorn
-
-# If no Lotus Pavilion then manually enter attendance
-# attendance <- c(8,9,5,3,8,9,9)
-# qualifiers <- c(2,3,2,2,1,4,2) 
+tournament <- "Toronto\nGrand Championship"
+#qualifiers <- c(3,8,4,2,5,7,2) # Day 1A
+qualifiers <- c(0,1,1,0,3,2,1) 
 rate <- round(100*qualifiers/attendance)
 backgroundimage <- "background.jpg"
+
 
 
 # Saving to dataframe
@@ -79,7 +74,7 @@ unicornmon <- grid::rasterGrob(unicorn, interpolate = T)
 
 ## Attendance
 clantitle <- paste(tournament,"\nAttendance")
-titlevjust <- -8
+titlevjust <- -max(attendance)/.8
 monymax <- max(attendance)/4
 
 # Plot the chart
@@ -87,7 +82,7 @@ monymax <- max(attendance)/4
 ggplot(clan_data, aes(clan, attendance, fill = clan)) +
   theme_neuropsychology() +
   ggtitle(clantitle) +
-  theme(plot.title = element_text(hjust = 0.5, vjust = titlevjust, margin = margin(t = 10, b = -20), colour = "#DFD8C1", size = rel(2), face = "bold")) +
+  theme(plot.title = element_text(hjust = 0.5, vjust = titlevjust, margin = margin(t = 10, b = -20), colour = "#DFD8C1", size = rel(1.5), face = "bold")) +
   scale_fill_manual(values = clan_palette) +
   guides(fill = FALSE) + 
   annotation_custom(rasterGrob(image, width = unit(1,"npc"), height = unit(1,"npc")), -Inf, Inf, -Inf, Inf) +
@@ -103,20 +98,20 @@ ggplot(clan_data, aes(clan, attendance, fill = clan)) +
   scale_x_discrete('') +
   geom_shadowtext(aes(label = ifelse(attendance > 0,round(attendance),''), ymax = 0), size = 7, fontface = 2, colour = 'white', hjust = 0.5, vjust = 1.5)
 
-file_name <- paste0(tournament_id, "_attendance.png")
-ggsave(file_name, width = 8, height = 5, units = "in")
+
+ggsave("attendance.png", width = 8, height = 5, units = "in")
 
 
 
 ## Qualification numbers
 clantitle <- paste(tournament,"\nQualifiers")
-titlevjust <- -8
-monymax <- max(qualifiers)/4
+titlevjust <- -max(qualifiers)*3.5
+monymax <- max(qualifiers)/5
 
 ggplot(clan_data, aes(clan, qualifiers, fill = clan)) +
   theme_neuropsychology() +
   ggtitle(clantitle) +
-  theme(plot.title = element_text(hjust = 0.5, vjust = titlevjust, margin = margin(t = 10, b = -20), colour = "#DFD8C1", size = rel(2), face = "bold")) +
+  theme(plot.title = element_text(hjust = 0.5, vjust = titlevjust, margin = margin(t = 10, b = -20), colour = "#DFD8C1", size = rel(1.5), face = "bold")) +
   scale_fill_manual(values = clan_palette) +
   guides(fill = FALSE) + 
   annotation_custom(rasterGrob(image, width = unit(1,"npc"), height = unit(1,"npc")), -Inf, Inf, -Inf, Inf) +
@@ -132,21 +127,20 @@ ggplot(clan_data, aes(clan, qualifiers, fill = clan)) +
   annotation_custom(unicornmon, xmin = 6.7, xmax = 7.3, ymin = 0, ymax = monymax) +
   geom_shadowtext(aes(label = ifelse(qualifiers > 0,round(qualifiers),''), ymax = 0), size = 7, fontface = 2, colour = 'white', hjust = 0.5, vjust = 1.5)
 
-file_name <- paste0(tournament_id, "_qualifiers.png")
-ggsave(file_name, width = 8, height = 5, units = "in")
+ggsave("qualifiers.png", width = 8, height = 5, units = "in")
 
 
 
 ## Qualification Rate
 
 clantitle <- paste(tournament,"\nQualification Rate")
-titlevjust <- -8
-monymax <- max(rate)/4
+titlevjust <- -10
+monymax <- max(rate)/5
 
 ggplot(clan_data, aes(clan, rate, fill = clan)) +
   theme_neuropsychology() +
   ggtitle(clantitle) +
-  theme(plot.title = element_text(hjust = 0.5, vjust = titlevjust, margin = margin(t = 10, b = -20), colour = "#DFD8C1", size = rel(2), face = "bold")) +
+  theme(plot.title = element_text(hjust = 0.5, vjust = titlevjust, margin = margin(t = 10, b = -20), colour = "#DFD8C1", size = rel(1.5), face = "bold")) +
   scale_fill_manual(values = clan_palette) +
   guides(fill = FALSE) + 
   annotation_custom(rasterGrob(image, width = unit(1,"npc"), height = unit(1,"npc")), -Inf, Inf, -Inf, Inf) +
@@ -162,8 +156,8 @@ ggplot(clan_data, aes(clan, rate, fill = clan)) +
   annotation_custom(unicornmon, xmin = 6.7, xmax = 7.3, ymin = 0.2, ymax = monymax) +
   geom_shadowtext(aes(label = ifelse(rate > 0,paste(round(rate),'%', sep=''),''), ymax = 0), size = 7, fontface = 2, colour = 'white', hjust = 0.5, vjust = 1.5)
 
-file_name <- paste0(tournament_id, "_qual_rate.png")
-ggsave(file_name, width = 8, height = 5, units = "in")
+ggsave("qual_rate.png", width = 8, height = 5, units = "in")
+
 
 
 ## EOF

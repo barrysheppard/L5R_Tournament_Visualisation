@@ -9,7 +9,7 @@ require("DiagrammeR")
 # Updated for PAX
 
 # Enter  name of Tournament
-tournament <- "Madrid Grand Kotei 2018"
+tournament <- "Madrid Grand Championship 2019"
 
 # Clan Colors
 crab <- '4C5660'
@@ -24,110 +24,64 @@ neutral <- '888888'
 
 
 
-# Players in Seed order
-seed01 <- "Shadowblade"
-clan01 <- lion
-seed02 <- "Jakub Irzyk"
-clan02 <- scorpion
-seed03 <- "Jose Luis SS"
-clan03 <- phoenix
-seed04 <- "Pablo Tobias"
-clan04 <- scorpion
-seed05 <- "Mario B A"
-clan05 <- neutral
-seed06 <- "Cesar Jiminez"
-clan06 <- neutral
-seed07 <- "Gustavo C C"
-clan07 <- neutral
-seed08 <- "Aioria"
-clan08 <- neutral
-seed09 <- "Marc C R"
-clan09 <- neutral
-seed10 <- "Roberto C R"
-clan10 <- neutral
-seed11 <- "Pablo Pintor"
-clan11 <- neutral
-seed12 <- "Marcos Yerga"
-clan12 <- neutral
-seed13 <- "See13"
-clan13 <- neutral
-seed14 <- "See14"
-clan14 <- neutral
-seed15 <- "See15"
-clan15 <- neutral
-seed16 <- "Antonio Garrido"
-clan16 <- neutral
-
-
-
 # Enter names and color codes for top 16
-name16a <- "Shadowblade"; clan16a <- lion
-name16b <- "Antonio Garrido"; clan16b <- scorpion
-name16c <- "Aioria"; clan16c <- crane
-name16d <- "Marc C R"; clan16d <- dragon
-name16e <- "Pablo Tobias"; clan16e <- scorpion
-name16f <- "Javier G P"; clan16f <- crane
-name16g <- "Mario B A"; clan16g <- scorpion
-name16h <- "Diego Ferandez"; clan16h <- scorpion
-name16i <- "Jakub Irzyk"; clan16i <- clan02
-name16j <- "Alfonso Domenech"; clan16j <- phoenix
-name16k <- "Xavier M"; clan16k <- scorpion
-name16l <- "Roberto C P"; clan16l <- dragon
-name16m <- "Jose Luis S S"; clan16m <- phoenix
-name16n <- "Santiago Orte"; clan16n <- scorpion
-name16o <- "Cesar Jiminez"; clan16o <- scorpion
-name16p <- "Alain L"; clan16p <- crane
+name16a <- "Ide Nobu"; clan16a <- unicorn
+name16b <- "Johnny Shen"; clan16b <- scorpion
+name16c <- "Erik Stenberg"; clan16c <- scorpion
+name16d <- "Matthew Beck"; clan16d <- phoenix
+name16e <- "Daniel Kaye"; clan16e <- unicorn
+name16f <- "Jose Luis Saenz"; clan16f <- phoenix
+name16g <- "Alain Laugier"; clan16g <- crane
+name16h <- "Pablo Pintor Espinsoa"; clan16h <- crab
+name16i <- "Yanik Richard"; clan16i <- crane
+name16j <- "Zachary Lowe"; clan16j <- scorpion
+name16k <- "Gilles Molina"; clan16k <- crane
+name16l <- "Erik Baalhuis"; clan16l <- crane
+name16m <- "Christopher DAgostino"; clan16m <- scorpion
+name16n <- "Jose Antonio T D"; clan16n <- crane
+name16o <- "Matthew Swinburne"; clan16o <- scorpion
+name16p <- "Steve Palumbo"; clan16p <- scorpion
 
 
 # Enter names and color codes for top 8
 name8a <- name16a; clan8a <- clan16a
-name8b <- name16d; clan8b <- clan16d
+name8b <- name16c; clan8b <- clan16c
 name8c <- name16e; clan8c <- clan16e
 name8d <- name16g; clan8d <- clan16g
 name8e <- name16i; clan8e <- clan16i
-name8f <- name16k; clan8f <- clan16k
+name8f <- name16l; clan8f <- clan16l
 name8g <- name16m; clan8g <- clan16m
 name8h <- name16o; clan8h <- clan16o
 
-# Blank out
-# Enter names and color codes for top 8
-name8a <- ""; clan8a <- neutral
-name8b <- ""; clan8b <- neutral
-name8c <- ""; clan8c <- neutral
-name8d <- ""; clan8d <- neutral
-name8e <- ""; clan8e <- neutral
-name8f <- ""; clan8f <- neutral
-name8g <- ""; clan8g <- neutral
-name8h <- ""; clan8h <- neutral
+# # Blank out
+# # Enter names and color codes for top 8
+# name8a <- ""; clan8a <- neutral
+# name8b <- ""; clan8b <- neutral
+# name8c <- ""; clan8c <- neutral
+# name8d <- ""; clan8d <- neutral
+# name8e <- ""; clan8e <- neutral
+# name8f <- ""; clan8f <- neutral
+# name8g <- ""; clan8g <- neutral
+# name8h <- ""; clan8h <- neutral
 
-
-name4a <- ""; clan4a <- neutral
-name8b <- ""; clan8b <- neutral
-name8c <- ""; clan8c <- neutral
-name4b <- ""; clan4b <- neutral
-name4c <- ""; clan4c <- neutral
-name8f <- ""; clan8f <- neutral
-name4d <- ""; clan4d <- neutral
-name8h <- ""; clan8h <- neutral
 
 
 # Enter names and color codes for top 4
-name4a <- name8a; clan4a <- clan8a
+name4a <- name8b; clan4a <- clan8b
 name4b <- name8d; clan4b <- clan8d
-name4c <- name8f; clan4c <- clan8f
-name4d <- name8g; clan4d <- clan8g 
+name4c <- name8e; clan4c <- clan8e
+name4d <- name8h; clan4d <- clan8h
 
 # Enter names and color codes for top 2
 
 #name2a <- ""; clan2a <- neutral
 #name2b <- ""; clan2b <- neutral
 
-name2a <- name4b; clan2a <- clan4b
+name2a <- name4a; clan2a <- clan4a
 name2b <- name4d; clan2b <- clan4d
 
 # Enter names and color codes for winner
-name1 <- name2b; clan1 <- clan2b
-#name1 <- ""; clan1 <- neutral
+name1 <- 'Pablo Pintor\nEspinosa'; clan1 <- clan2a
 
 x <- paste0("
             digraph boxes_and_circles {

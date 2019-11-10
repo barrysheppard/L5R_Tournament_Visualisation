@@ -9,7 +9,7 @@ pacman::p_load("DiagrammeR","DiagrammeRsvg","magrittr","rsvg")
   
   
 # Enter  name of Tournament
-tournament <- "Nürnberg Kotei 2019"
+tournament <- "Bologna Kotei 2019"
 
 # Clan Colors
 crab <- '4C5660'
@@ -23,23 +23,32 @@ neutral <- '888888'
 
 
 
+ - Scorpion (Hatamoto)
+ - Crane (Hatamoto)
+ - Scorpion
+ - Unicorn (Hatamoto)
+ - Lion (Hatamoto)
+ - Unicorn
+ - Crab (Hatamoto)
+ - Crane
+
 # Players in Seed order
-seed01 <- "Dominik Klapper"
-clan01 <- crane
-seed02 <- "Nicholas Simonpietri"
+seed01 <- "Norbert Vincze"
+clan01 <- scorpion
+seed02 <- "Alessandro Apicella"
 clan02 <- crane
-seed03 <- "Adrián Marín"
-clan03 <- crane
-seed04 <- "Matthieu David"
-clan04 <- scorpion
-seed05 <- "Alain Laugier"
-clan05 <- crane
-seed06 <- "Nils Block"
-clan06 <- scorpion
-seed07 <- "Daniel Knauss"
+seed03 <- "Pietro Sebastiano Monari"
+clan03 <- scorpion
+seed04 <- "Terék Milán"
+clan04 <- unicorn
+seed05 <- "Marios Bounakis"
+clan05 <- lion
+seed06 <- "John Papadakis"
+clan06 <- unicorn
+seed07 <- "Daniel Correas"
 clan07 <- crab
-seed08 <- "Stephan Klopfer"
-clan08 <- unicorn
+seed08 <- "Lorenzo Becchetti"
+clan08 <- crane
 
 
 # Enter names and color codes for top 8
@@ -54,8 +63,8 @@ name8b <- seed06; clan8b <- clan06 #8
 
 # Enter names and color codes for top 4
 name4c <- name8f; clan4c <- clan8f #1
-name4d <- name8h; clan4d <- clan8h #2
-name4b <- name8c; clan4b <- clan8c #3
+name4d <- name8g; clan4d <- clan8g #2
+name4b <- name8d; clan4b <- clan8d #3
 name4a <- name8a; clan4a <- clan8a #4
 
 # # Modifications
@@ -65,12 +74,12 @@ name4a <- name8a; clan4a <- clan8a #4
 # clan4d <- neutral #2
 # name4b <- ""
 # clan4b <- neutral #3
-# name4a <- ""
+name4a <- "Pietro\nSebastiano Monari"
 # clan4a <- neutral #4
 
 # Enter names and color codes for top 2
-name2b <- name4c; clan2b <- clan4c #1
-name2a <- name4b; clan2a <- clan4b #2
+name2b <- name4d; clan2b <- clan4d #1
+name2a <- name4a; clan2a <- clan4a #2
 
 # To clear while games are in progress
 # name2a <- ""; clan2a <- neutral
