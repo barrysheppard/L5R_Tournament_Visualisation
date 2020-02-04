@@ -12,8 +12,8 @@ pacman::p_load("ggplot2","dplyr","tidyr","readr","purrr","tibble","psych","ggpub
 # User defined variables
 startdate <- as.Date('2019-05-04')
 enddate <- Sys.Date()
-tournament_name <- "Madrid Grand Championship"
-tournament_id <- "4746"
+tournament_name <- "Las Vegas Open Grand Championship"
+tournament_id <- "5163"
 
 
 # This contacts the Lotus Pavilion website and downloads every game 
@@ -134,5 +134,6 @@ p6 <- clanplot('Scorpion','#8C3D2E')
 p7 <- clanplot('Unicorn','#6D5472')
 
 multiplot <- arrangeGrob(p1, p2, p3, p4, p5, p6, p7, logo, nrow = 2, top=textGrob(tournament_name, gp=gpar(fontsize=20,font=3)))
-ggsave("winrates.png", multiplot, width = 12, height = 6)
+file_name <- paste0(tournament_id, "_winrates.png")
+ggsave(file_name, multiplot, width = 12, height = 6)
 
