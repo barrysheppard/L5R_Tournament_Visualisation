@@ -8,15 +8,13 @@
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(jpeg, png, ggplot2, grid, neuropsychology, shadowtext)
-
+pacman::p_load(jpeg, png, ggplot2, grid, neuropsychology, shadowtext, magick)
 
 # this is the load from Lotus
  
 # User defined variables for the load from Lotus Pavilion
-tournament_id <- 4879
-qual_points <-  42
-tournament <- "Winter Court 2019 Day 2"
+tournament_id <- 5163
+tournament <- "Las Vegas Open"
 
 # Load from Lotus Pavilion if possible
 # Returns tournament_players
@@ -34,13 +32,13 @@ attendance <- c(Crab, Crane, Dragon, Lion, Phoenix, Scorpion, Unicorn)
 
 # Next we get those who qualified.
 # For this we need to specify the number of points required.
-Crab <- length(which(tournament_players$clan == 'Crab' & tournament_players$points >= qual_points))
-Crane <- length(which(tournament_players$clan == 'Crane' & tournament_players$points >= qual_points))
-Dragon <- length(which(tournament_players$clan == 'Dragon' & tournament_players$points >= qual_points))
-Lion <- length(which(tournament_players$clan == 'Lion' & tournament_players$points >= qual_points))
-Phoenix <- length(which(tournament_players$clan == 'Phoenix' & tournament_players$points >= qual_points))
-Scorpion <- length(which(tournament_players$clan == 'Scorpion' & tournament_players$points >= qual_points))
-Unicorn <- length(which(tournament_players$clan == 'Unicorn' & tournament_players$points >= qual_points))
+Crab <- length(which(tournament_players$clan == 'Crab' & tournament_players$topx < 256))
+Crane <- length(which(tournament_players$clan == 'Crane' & tournament_players$topx < 256))
+Dragon <- length(which(tournament_players$clan == 'Dragon' & tournament_players$topx < 256))
+Lion <- length(which(tournament_players$clan == 'Lion' & tournament_players$topx < 256))
+Phoenix <- length(which(tournament_players$clan == 'Phoenix' & tournament_players$topx < 256))
+Scorpion <- length(which(tournament_players$clan == 'Scorpion' & tournament_players$topx < 256))
+Unicorn <- length(which(tournament_players$clan == 'Unicorn' & tournament_players$topx < 256))
 qualifiers <- c(Crab, Crane, Dragon, Lion, Phoenix, Scorpion, Unicorn)
 
 # Barchart for breakdown of clans in a tournament etc.
@@ -106,6 +104,11 @@ ggplot(clan_data, aes(clan, attendance, fill = clan)) +
 file_name <- paste0(tournament_id, "_attendance.png")
 ggsave(file_name, width = 8, height = 5, units = "in")
 
+# Added section to crop and resize images
+raw_image <- image_read(file_name)
+cropped_image <- image_crop(raw_image, "2180x1141+205+160")
+final_image <- image_scale(cropped_image, "500")
+image_write(final_image, path = file_name, format = "png")
 
 
 ## Qualification numbers
@@ -135,6 +138,11 @@ ggplot(clan_data, aes(clan, qualifiers, fill = clan)) +
 file_name <- paste0(tournament_id, "_qualifiers.png")
 ggsave(file_name, width = 8, height = 5, units = "in")
 
+# Added section to crop and resize images
+raw_image <- image_read(file_name)
+cropped_image <- image_crop(raw_image, "2180x1141+205+160")
+final_image <- image_scale(cropped_image, "500")
+image_write(final_image, path = file_name, format = "png")
 
 
 ## Qualification Rate
@@ -165,6 +173,11 @@ ggplot(clan_data, aes(clan, rate, fill = clan)) +
 file_name <- paste0(tournament_id, "_qual_rate.png")
 ggsave(file_name, width = 8, height = 5, units = "in")
 
+# Added section to crop and resize images
+raw_image <- image_read(file_name)
+cropped_image <- image_crop(raw_image, "2180x1141+205+160")
+final_image <- image_scale(cropped_image, "500")
+image_write(final_image, path = file_name, format = "png")
 
 ## EOF
 
