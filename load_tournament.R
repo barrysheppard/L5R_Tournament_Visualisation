@@ -17,12 +17,15 @@ pacman::p_load("ggplot2", "dplyr", "tidyr", "readr", "purrr", "tibble", "psych",
 options(stringsAsFactors = FALSE)
 url <- "http://thelotuspavilion.com"
 path <- paste0("/api/v3/tournaments/", tournament_id)
-
 raw.result <- GET(url = url, path = path)
 this.raw.content <- rawToChar(raw.result$content)
-
 tournament_players <- fromJSON(this.raw.content)
 
+path <- paste0("/api/v3/tournaments?tournament_id=", tournament_id)
+raw.result <- GET(url = url, path = path)
+this.raw.content <- rawToChar(raw.result$content)
+tournament_details <- fromJSON(this.raw.content)
+tournament_name <- tournament_details$tournament_name
 
 # Tidy up phase. we really only want the tournament_players and tournament data
 rm(url)
