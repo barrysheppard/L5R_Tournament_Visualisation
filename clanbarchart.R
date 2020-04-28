@@ -13,12 +13,13 @@ pacman::p_load(jpeg, png, ggplot2, grid, neuropsychology, shadowtext, magick)
 # this is the load from Lotus
  
 # User defined variables for the load from Lotus Pavilion
-tournament_id <- 5370
+tournament_id <- 5411
 
 # Load from Lotus Pavilion if possible
 # Returns tournament_players
 source("load_tournament.R", print.eval = TRUE)
-tournament_name <- "Jade Championship EU" # Change if name differs from LP
+# Change if name differs from LP
+tournament_name <- "LL Online Event 3: NA" 
 
 
 # This next step gets attendance for each clan
@@ -69,9 +70,12 @@ qualifiers <- c(Crab, Crane, Dragon, Lion, Phoenix, Scorpion, Unicorn)
 
 # If no Lotus Pavilion then manually enter attendance
 # attendance <- c(8,9,5,3,8,9,9)
-# qualifiers <- c(2,3,2,2,1,4,2) 
+qualifiers <- c(0,1,1,1,0,1,0) 
 rate <- round(100*qualifiers/attendance)
+# Thanks to US events I got my first error with 0 players for a clan!
+rate[is.na(rate)] <- 0
 backgroundimage <- "background.jpg"
+
 
 
 # Saving to dataframe
@@ -192,7 +196,7 @@ ggplot(clan_data, aes(clan, rate, fill = clan)) +
   annotation_custom(phoenixmon, xmin = 4.7, xmax = 5.3, ymin = 0.2, ymax = monymax) +
   annotation_custom(scorpionmon, xmin = 5.7, xmax = 6.3, ymin = 0.2, ymax = monymax) +
   annotation_custom(unicornmon, xmin = 6.7, xmax = 7.3, ymin = 0.2, ymax = monymax) +
-  geom_shadowtext(aes(label = ifelse(rate > 0,paste(round(rate),'%', sep=''),''), ymax = 0), size = 7, fontface = 2, colour = 'white', hjust = 0.5, vjust = 1.5)
+  geom_shadowtext(aes(label = ifelse(rate > 0,paste(round(rate),'%', sep = ''),''), ymax = 0), size = 7, fontface = 2, colour = 'white', hjust = 0.5, vjust = 1.5)
 
 file_name <- paste0(tournament_id, "_qual_rate.png")
 ggsave(file_name, width = 8, height = 5, units = "in")
