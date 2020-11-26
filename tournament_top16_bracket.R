@@ -2,7 +2,7 @@
 
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load("DiagrammeR","DiagrammeRsvg","magrittr","rsvg")
+pacman::p_load("DiagrammeR","DiagrammeRsvg","magrittr","rsvg", "stringr")
 
 
 # I went crazy trying to work out how to properly order the top 16.
@@ -10,10 +10,10 @@ pacman::p_load("DiagrammeR","DiagrammeRsvg","magrittr","rsvg")
 
 
 # User defined variables for the load from Lotus Pavilion
-tournament_id <- 5419
+tournament_id <- 5550
 
 file_name <- paste0(tournament_id, "_top_16.png")
-
+file_name <- paste0("images/", file_name)
 
 # As we want to save files we're setting the directory to the same as the plot.R file
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
@@ -34,7 +34,8 @@ unicorn <- '6D5472'
 neutral <- '888888'
 
 clan_color <- function(clan_name) {
-  if (clan_name == "Crab") {color <- crab}
+  if (is.na(clan_name)) {color <- neutral}
+  else if (clan_name == "Crab") {color <- crab}
   else if (clan_name == "Crane") {color <- crane}
   else if (clan_name == "Dragon") {color <- dragon}
   else if (clan_name == "Lion") {color <- lion}
@@ -51,8 +52,13 @@ player_name <- function(topx, table, player) {
   player2 <- all_games$p2_name[all_games$topx==topx & all_games$table_number==table]
   if (player == 1) {player_name <- player1}
   else {player_name <- player2}
+  # If there is no one in that spot, return empty text
+  if (identical(player_name, character(0))) {
+    player_name <- " "
+  }
   # remove any weird characters
   player_name <- str_replace_all(player_name, "[[:punct:]]", " ")
+  print(player_name)
   player_name
 }
 
@@ -64,11 +70,13 @@ player_clan_color <- function(topx, table, player) {
   } else {
     player_clan <- player2
   }
+  # If there is no one in that spot, return neutral color
+  if (identical(player_clan, character(0))) {
+    player_clan <- "Neutral"
+  }
   result <- clan_color(player_clan)
-  print(player1)
-  print(player2)
   print(result)
-  
+  result
 }
 
 
@@ -115,7 +123,12 @@ name2b <- player_name(2, 1, 2); clan2b <- player_clan_color(2, 1, 2)
 name1 <- tournament_players$player_name[tournament_players$topx == 1]
 clan1 <- clan_color(tournament_players$clan[tournament_players$topx == 1])
 
-# name1 <- ""; clan1 <- neutral
+if (identical(name1, character(0))) {
+  name1 <- " "
+  clan1 <- "888888"
+}
+
+
 
 
 
@@ -202,3 +215,9 @@ x <- paste0("
 grViz(x)
 grViz(x) %>%
   export_svg %>% charToRaw %>% rsvg_png(file_name)
+
+apuf<-tempfile()
+cat(DiagrammeRsvg::export_svg(grViz(x)),file=apuf)
+
+rsvg::rsvg_png(apuf, file_name)
+
