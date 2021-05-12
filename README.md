@@ -2,7 +2,7 @@
 A range of Useful R code relating to the L5R LCG.
 
 * winrates_combined.R when provided with a tournament url, extracts win rates from thelotuspavilion.com tournament website for each faction and compliles them into a combined infographic.
-![win rates](https://github.com/barrysheppard/L5R/blob/master/examples/winrates.png "Win Rates")
+![win rates](L5R_Tournament_Visualisation/examples/winrates.png "Win Rates")
 
 * clanbarchart.R when provided with a tournament url, extracts details form thelotuspavilion.com tournament website and prepares bar plots with attendance, qualification, and qualification rates for each faction.
 ![attendance](https://github.com/barrysheppard/L5R/blob/master/examples/attendance.png "Attendance")
